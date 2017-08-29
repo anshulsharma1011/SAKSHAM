@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th style="width:10%">Username</th>
+        <th style="width:10%">Fullname</th>
+        <th style="width:10%">Gender</th>
+        <th style="width:10%">Branch</th>
+        <th style="width:10%">Session</th>
+        <th style="width:10%">Contact Number</th>
+        <th style="width:10%">Accommodation</th>
+        <th style="width:10%">Designation</th>
+    </tr>
+
+    <form action="{% url 'accounts:college_captain' %}" method="post">
+        {% csrf_token %}
+    {% for user in users %}
+        <tr>
+        <td style="text-align:center">{{ user.username }}</td>
+        <td style="text-align:center">{{ user.profile.fullname }}</td>
+        <td style="text-align:center">{{ user.profile.gender }}</td>
+        <td style="text-align:center">{{ user.profile.branch }}</td>
+        <td style="text-align:center">{{ user.profile.session }}</td>
+        <td style="text-align:center">{{ user.profile.contact_details }}</td>
+        <td style="text-align:center">{{ user.profile.accommodation }}</td>
+        <td style="text-align:center">{{ user.profile.designation }}</td>
+        <td>
+            <input type="radio" id="player{{ user.id }}" name="player" value="{{ user.id }}">
+        </td>
+        </tr>
+
+    {% endfor %}
+        <input type="submit" value="COLLEGE CAPTAIN">
+    </form>
+</table>
+
+</body>
+</html>
