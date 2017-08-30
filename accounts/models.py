@@ -33,7 +33,7 @@ class Profile(models.Model):
     session = models.CharField(max_length=20, default='')
     contact_details = models.CharField(max_length=15, default='')
     accommodation = models.CharField(max_length=20, choices=AccommodationChoices, default='')
-    designation = models.CharField(max_length=20,default='')
+    designation = models.CharField(max_length=20,default='',null=True)
     profile_photo = models.FileField(null=True)
 
     def __str__(self):

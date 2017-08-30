@@ -18,26 +18,30 @@
     </tr>
 
     <form action="{% url 'accounts:college_captain' %}" method="post">
+        <select name="design">
+            <option name="branch_captain" value="Branch Captain">Branch Captain</option>
+            <option name="college_captain" value="College Captain">College Captain</option>
+            <option name="no_designation" value="">Remove</option>
+        </select>
         {% csrf_token %}
-    {% for user in users %}
+    {% for profile in users %}
         <tr>
-        <td style="text-align:center">{{ user.username }}</td>
-        <td style="text-align:center">{{ user.profile.fullname }}</td>
-        <td style="text-align:center">{{ user.profile.gender }}</td>
-        <td style="text-align:center">{{ user.profile.branch }}</td>
-        <td style="text-align:center">{{ user.profile.session }}</td>
-        <td style="text-align:center">{{ user.profile.contact_details }}</td>
-        <td style="text-align:center">{{ user.profile.accommodation }}</td>
-        <td style="text-align:center">{{ user.profile.designation }}</td>
+        <td style="text-align:center">{{ profile.user.username }}</td>
+        <td style="text-align:center">{{ profile.fullname }}</td>
+        <td style="text-align:center">{{ profile.gender }}</td>
+        <td style="text-align:center">{{ profile.branch }}</td>
+        <td style="text-align:center">{{ profile.session }}</td>
+        <td style="text-align:center">{{ profile.contact_details }}</td>
+        <td style="text-align:center">{{ profile.accommodation }}</td>
+        <td style="text-align:center">{{ profile.designation }}</td>
         <td>
             <input type="radio" id="player{{ user.id }}" name="player" value="{{ user.id }}">
         </td>
         </tr>
 
-    {% endfor %}
-        <input type="submit" value="COLLEGE CAPTAIN">
+    {% endfor %}<br>
+        <input type="submit" value="ASSIGN DESIGNATION">
     </form>
 </table>
-
 </body>
 </html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>SAKSHAM 2017</h1>
+
+{% if user.is_staff %}
+<a href="{% url 'saksham2017:add_sports' %}">Add Sports</a>
+<a href="{% url 'saksham2017:add_teams' %}">Add Teams</a>
+{% endif %}
+</body>
+</html>

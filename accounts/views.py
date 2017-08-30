@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, render_to_response
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth import authenticate,login
@@ -55,17 +55,27 @@ class AllUsersView(ListView):
     context_object_name = 'users'
 
     def get_queryset(self):
-        return User.objects.all()
+        return Profile.objects.all().order_by('branch')
 
 
 def CollegeCaptain(request):
+    template_name = 'accounts/all_users.html'
     player = User.objects.get(pk = request.POST['player'])
     selected_player = Profile.objects.get(user = player)
-
-    if selected_player.designation == 'Branch Captain':
-        return HttpResponse("Player is already Selected as Branch Captain")
-
-    else:
-        selected_player.designation = 'College Captain'
+    des = request.POST.get("design","")
+    message  = "DATA ENTERED"
+    if des == 'Remove':
+        selected_player.designation = des
         selected_player.save()
-        return HttpResponse("College Captain Selected")
+        return HttpResponse(message)
+
+
+
+    elif des == 'College Captain' or 'Branch Captain':
+        selected_player.designation = des
+        selected_player.save()
+        return HttpResponse(message)
+
+    elif (selected_player.designation == ('Branch Captain' or 'College Captain')) and des!='Remove':
+        message = "Player already has a designation"
+        return HttpResponse(message)
