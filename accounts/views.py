@@ -5,8 +5,8 @@ from django.contrib.auth import authenticate,login
 from .models import Profile
 from django.contrib.auth.models import User
 from django.views.generic import TemplateView,View,CreateView,ListView
-from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import user_passes_test,login_required
 from .forms import RegisterForm
 
 # Create your views here.
@@ -49,7 +49,7 @@ class ProfileCreate(CreateView):
         return super(ProfileCreate,self).form_valid(form)
     success_url = reverse_lazy('accounts:index')
 
-
+@method_decorator(user_passes_test(lambda u:u.is_superuser),name='dispatch')
 class AllUsersView(ListView):
     template_name = 'accounts/all_users.html'
     context_object_name = 'users'
@@ -57,7 +57,7 @@ class AllUsersView(ListView):
     def get_queryset(self):
         return Profile.objects.all().order_by('branch')
 
-
+@method_decorator(user_passes_test(lambda u:u.is_superuser),name='dispatch')
 def CollegeCaptain(request):
     template_name = 'accounts/all_users.html'
     player = User.objects.get(pk = request.POST['player'])
@@ -67,7 +67,7 @@ def CollegeCaptain(request):
     if des == 'Remove':
         selected_player.designation = des
         selected_player.save()
-        return HttpResponse(message)
+        return redirect(template_name)
 
 
 
@@ -78,4 +78,4 @@ def CollegeCaptain(request):
 
     elif (selected_player.designation == ('Branch Captain' or 'College Captain')) and des!='Remove':
         message = "Player already has a designation"
-        return HttpResponse(message)
+        return redirect(template_name)

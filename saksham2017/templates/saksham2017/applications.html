@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<table>
+    <tr>
+        <th style="width:10%">Username</th>
+        <th style="width:10%">Fullname</th>
+        <th style="width:10%">Gender</th>
+        <th style="width:10%">Branch</th>
+        <th style="width:10%">Session</th>
+        <th style="width:10%">Contact Number</th>
+        <th style="width:10%">Accommodation</th>
+        <th style="width:10%">Sports</th>
+    </tr>
+
+{% if user.is_superuser %}
+<form action="{% url 'saksham2017:select' %}" method="post">
+    {% csrf_token %}
+    {% for app in application %}
+
+        <tr>
+            <td style="text-align:center">{{ app.user.username }}</td>
+            <td style="text-align:center">{{ app.user.profile.fullname }}</td>
+            <td style="text-align:center">{{ app.user.profile.gender }}</td>
+            <td style="text-align:center">{{ app.user.profile.branch }}</td>
+            <td style="text-align:center">{{ app.user.profile.session }}</td>
+            <td style="text-align:center">{{ app.user.profile.contact_details }}</td>
+            <td style="text-align:center">{{ app.user.profile.accommodation }}</td>
+            <td style="text-align:center">{{ app.sports_name }}</td>
+            <td>
+                {% if not app.status %}
+                    <input type="checkbox" id="user{{ forloop.counter }}" name="app{{ forloop.counter }}" value="{{ app.id }}">
+                {% else %}
+                    <img src="http://i.imgur.com/b9b13Rd.png">
+                {% endif %}
+            </td>
+        </tr>
+
+{% endfor %}
+
+{% elif user.is_staff and not user.is_superuser %}
+{% for app in apps %}
+
+        <tr>
+            <td style="text-align:center">{{ app.user.username }}</td>
+            <td style="text-align:center">{{ app.user.profile.fullname }}</td>
+            <td style="text-align:center">{{ app.user.profile.gender }}</td>
+            <td style="text-align:center">{{ app.user.profile.branch }}</td>
+            <td style="text-align:center">{{ app.user.profile.session }}</td>
+            <td style="text-align:center">{{ app.user.profile.contact_details }}</td>
+            <td style="text-align:center">{{ app.user.profile.accommodation }}</td>
+            <td style="text-align:center">{{ app.sports_name }}</td>
+            <td>
+                {% if not app.status %}
+                    <input type="checkbox" id="user{{ forloop.counter }}" name="app{{ forloop.counter }}" value="{{ app.id }}">
+                {% else %}
+                    <img src="http://i.imgur.com/b9b13Rd.png">
+                {% endif %}
+            </td>
+        </tr>
+
+{% endfor %}
+    {% endif %}
+    <input type="submit" value="SELECT">
+</form>
+</table>
+
+</body>
+</html>

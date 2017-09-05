@@ -7,13 +7,21 @@
 <body>
 
 
-{% if user.is_authenticated and request.user.is_staff %}
+{% if user.is_authenticated and request.user.is_superuser %}
 This page is for admin only
 <h1>Welcome Admin</h1>
 
 <a href="{% url 'accounts:all_users_list' %}">View all users</a><br>
+<a href="{% url 'saksham2017:index' %}">SAKSHAM 2017</a>
 
+{% elif user.is_authenticated %}
+
+    <h1>Welcome!</h1>
+    <a href="{% url 'saksham2017:index' %}">SAKSHAM 2017</a>
 {% endif %}
+
+
+
 </body>
 </html>
 

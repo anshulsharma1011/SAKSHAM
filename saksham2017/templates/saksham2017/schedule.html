@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+<h1>Hello</h1>
+<h1>Schedule</h1>
+<table>
+    <thead>
+        <tr>
+            <th>HOST</th>
+            <th>OPPONENT</th>
+            <th>POOL</th>
+            <th>MATCH NO</th>
+            <th>DATE</th>
+        </tr>
+        {% for sch in schedule %}
+        <tr>
+            <td>{{ sch.host }}</td>
+            <td>{{ sch.opponent }}</td>
+            <td>{{ sch.pool }}</td>
+            <td>{{ sch.match_no }} </td>
+            <td>{{ sch.date }}</td>
+        </tr>
+        {% endfor %}
+    </thead>
+
+</table>
+</body>
+</html>
